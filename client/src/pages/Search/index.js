@@ -15,16 +15,7 @@ function Search() {
         if (results && results.length > 0) {
             return results;
         }
-        // API.getGoogleBooks(title).then(res => setResults(res.data))
-        //     .catch(err => console.log(err));
     }, [])
-
-    // function loadBooks() {
-    //     API.getGoogleBooks(title).then(res => setResults(res.data))
-    //     .catch(err => console.log(err));
-    // }
-    //     API.getBooks().then(res => setBooks(res.data)).catch(err => console.log(err));
-    // }
 
     // Save Book
     function saveBook(book) {
@@ -59,7 +50,6 @@ function Search() {
             .catch(err => console.log(err));
     }
 
-
     return (
         <section>
             <div className='container card'>
@@ -82,16 +72,17 @@ function Search() {
             <br></br>
             <div className='container card'>
                 <h3>Results</h3>
+                {results.length ? (
                 <List>
                     {results.map((book, index) => (
                         <ListItem key={book.id}>
                             <div className='card'>
-                                <img src={book.volumeInfo.imageLinks.smallThumbnail} alt='book cover' />
+                                <img align="left" style={{paddingRight:10}} src={book.volumeInfo.imageLinks.smallThumbnail} alt='book cover' />
                                 <div className='card-body'>
                                     <h5 className='card-title'>{book.volumeInfo.title}</h5>
                                     <h6>{book.volumeInfo.authors}</h6>
                                     <p className='card-text'>{book.volumeInfo.description}</p>
-                                    <a key={'' + index + book.id} href={book.volumeInfo.infoLink} target={this.state.target}>View</a>
+                                    <a className='btn btn-sm' key={'' + index + book.id} href={book.volumeInfo.infoLink}>View</a>
                                     <SaveBtn
                                         key={'' + book.id + index}
                                         onClick={() => saveBook({
@@ -110,6 +101,9 @@ function Search() {
                         </ListItem>
                     ))}
                 </List>
+                ) : (
+                    <p>No results to Display</p>
+                )}
             </div>
         </section>
     )
