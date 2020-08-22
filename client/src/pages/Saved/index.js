@@ -13,9 +13,13 @@ function Saved() {
 
     function loadBooks() {
         API.getBooks()
-            .then(res =>
-                setBooks(res.data)
-            )
+            .then(res => {
+                if (res.data.length > 0) {
+                    setBooks(res.data)
+                } else {
+                    console.log("No books saved!")
+                }
+            })
             .catch(err => console.log(err))
     }
 
@@ -29,27 +33,29 @@ function Saved() {
         <div className='container card'>
             <div>
                 <h3>Saved Books</h3>
-                <List>
-                    {books.map(book => (
-                        <ListItem key={books._id}>
-                            <a
-                                key={book._id + "link"}
-                                href={book.link}
-                                target={this.state.target}
-                            >
-                                {book.title}
-                            </a>
-                            <p>Written By {book.author}</p>
-                            <p>
-                            <img align="left" style={{paddingRight:10}}
-                                src={book.image} alt="new"
-                            />
-                                {book.description}
-                            </p>
-                            <DeleteBtn onClick={() => deleteBook(book._id)} />
-                        </ListItem>
-                    ))}
-                </List>
+                <div>
+                    <List>
+                        {books.map(book => (
+                            <ListItem key={books._id}>
+                                <a
+                                    key={book._id + "link"}
+                                    href={book.link}
+                                    target={this.state.target}
+                                >
+                                    {book.title}
+                                </a>
+                                <p>Written By {book.author}</p>
+                                <p>
+                                <img align="left" style={{paddingRight:10}}
+                                    src={book.image} alt="new"
+                                />
+                                    {book.description}
+                                </p>
+                                <DeleteBtn onClick={() => deleteBook(book._id)} />
+                            </ListItem>
+                        ))}
+                    </List>
+                </div>
             </div>
         </div>
     )
