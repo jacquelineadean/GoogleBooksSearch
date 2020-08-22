@@ -6,7 +6,7 @@ import API from '../../utils/API';
 
 function Search() {
     // Setting initial state
-    const [title, setTitle] = useState()
+    const [title, setTitle] = useState({})
     const [results, setResults] = useState([])
     const [books, setBooks] = useState([])
 
@@ -37,10 +37,8 @@ function Search() {
     // Handle input change
     function handleInputChange(event) {
         const { name, value } = event.target;
-        setTitle({
-            // ...title,
-            [name]: value
-        })
+        console.log(event.target);
+        setTitle({...title, [name]: value})
         console.log(title);
     }
 
@@ -65,14 +63,15 @@ function Search() {
                     <p>Book Title</p>
                     <Input
                         name='title'
-                        value={title}
                         onChange={handleInputChange}
                         label='Book Title'
                         placeholder='Search Book Title'
                     />
                     <FormBtn
                         onClick={handleFormSubmit}
-                    />
+                    > 
+                        Search
+                    </FormBtn>
                 </form>
             </div>
             <br></br>
