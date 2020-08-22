@@ -6,17 +6,23 @@ import API from '../../utils/API';
 
 function Search() {
     // Setting initial state
-    const [title, setTitle] = useState({})
+    const [title, setTitle] = useState("")
     const [results, setResults] = useState([])
     const [books, setBooks] = useState([])
 
     // Load search results and store them 
     useEffect(() => {
-        API.getGoogleBooks(title).then(res => setResults(res.data))
-            .catch(err => console.log(err));
+        if (results && results.length > 0) {
+            return results;
+        }
+        // API.getGoogleBooks(title).then(res => setResults(res.data))
+        //     .catch(err => console.log(err));
     }, [])
 
     // function loadBooks() {
+    //     API.getGoogleBooks(title).then(res => setResults(res.data))
+    //     .catch(err => console.log(err));
+    // }
     //     API.getBooks().then(res => setBooks(res.data)).catch(err => console.log(err));
     // }
 
@@ -45,8 +51,7 @@ function Search() {
     // Handle submit
     function handleFormSubmit(event) {
         event.preventDefault();
-        const title = title.trim();
-        API.getBooks(title)
+        API.getGoogleBooks(title)
             .then(res => {
                 setResults(res.data.items)
                 console.log(results)
@@ -78,7 +83,7 @@ function Search() {
             <div className='container card'>
                 <h3>Results</h3>
                 <List>
-                    {books.map((book, index) => (
+                    {results.map((book, index) => (
                         <ListItem key={book.id}>
                             <div className='card'>
                                 <img src={book.volumeInfo.imageLinks.smallThumbnail} alt='book cover' />

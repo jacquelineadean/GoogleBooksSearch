@@ -1,9 +1,9 @@
 import React from "react";
 
-const SaveBtn = props => (
+const DeleteBtn = props => (
   <button className='btn btn-sm' {...props}>
-    Save
+    Delete
   </button>
 );
 
-export default SaveBtn;
+export default DeleteBtn;
