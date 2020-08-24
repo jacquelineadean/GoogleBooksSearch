@@ -10,7 +10,6 @@ class Search extends Component {
         title: "",
         noResults: true,
         results: [],
-        target: "",
         books: []
     };
 
@@ -42,11 +41,9 @@ class Search extends Component {
 
         API.getGoogleBooks(title)
             .then(res => {
-
                 console.log(res.data.items);
-
                 this.setState({
-                    toResults: true,
+                    noResults: false,
                     results: res.data.items
                 });
             })
@@ -87,7 +84,7 @@ class Search extends Component {
                                         <h5 className='card-title'>{book.volumeInfo.title}</h5>
                                         <h6>{book.volumeInfo.authors}</h6>
                                         <p className='card-text'>{book.volumeInfo.description}</p>
-                                        <a className='btn btn-sm' key={'' + index + book.id} href={book.volumeInfo.infoLink}>View</a>
+                                        <a className='btn btn-sm' key={'' + index + book.id} href={book.volumeInfo.infoLink} target="_blank">View</a>
                                         <SaveBtn
                                             key={'' + book.id + index}
                                             onClick={() => this.saveBook({
