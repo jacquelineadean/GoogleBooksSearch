@@ -1,64 +1,84 @@
-import React, { useState, useEffect } from 'react';
+import React, { Component } from 'react';
 import { List, ListItem } from '../../components/List';
 import DeleteBtn from '../../components/DeleteBtn';
 import API from '../../utils/API';
 
-
-function Saved() {
-    const [books, setBooks] = useState([])
-
-    useEffect(() => {
-        loadBooks()
-    }, [])
-
-    function loadBooks() {
-        API.getBooks()
-            .then(res => {
-                if (res.data.length > 0) {
-                    setBooks(res.data)
-                } else {
-                    console.log("No books saved!")
-                }
-            })
-            .catch(err => console.log(err))
+class Saved extends Component {
+    state = {
+        books: [],
+        noResults: false
     }
 
-    function deleteBook(id) {
+    componentDidMount() {
+        this.getBooks();
+    }
+
+    getBooks = () => {
+        API.getBooks()
+        .then(res => {
+            if (res.data.length > 0) {
+                this.setState({
+                    books: res.data
+                });
+            } else {
+                this.setState({
+                    noResults: true
+                });
+            }
+        })
+        .catch(err => console.log(err));
+    }
+
+    deleteBook = id => {
         API.deleteBook(id)
-          .then(res => loadBooks())
+          .then(res => this.getBooks())
           .catch(err => console.log(err));
     }
 
-    return (
-        <div className='container card'>
-            <div>
-                <h3>Saved Books</h3>
+    render() {
+        if (this.state.noResults) {
+            return (
+                <div className='container card'>
+                    <div>
+                        <h3>Saved Books</h3>
+                        <div>
+                            <p>You have no saved books.</p>
+                        </div>
+                    </div>
+                </div>
+            )
+        }
+        return (
+            <div className='container card'>
                 <div>
-                    <List>
-                        {books.map(book => (
-                            <ListItem key={books._id}>
-                                <a
-                                    key={book._id + "link"}
-                                    href={book.link}
-                                    target={this.state.target}
-                                >
-                                    {book.title}
-                                </a>
-                                <p>Written By {book.author}</p>
-                                <p>
-                                <img align="left" style={{paddingRight:10}}
-                                    src={book.image} alt="new"
-                                />
-                                    {book.description}
-                                </p>
-                                <DeleteBtn onClick={() => deleteBook(book._id)} />
-                            </ListItem>
-                        ))}
-                    </List>
+                    <h3>Saved Books</h3>
+                    <div>
+                        <List>
+                            {this.state.books.map(book => (
+                                <ListItem key={book._id}>
+                                    <a
+                                        key={book._id + "link"}
+                                        href={book.link}
+                                        target="_blank"
+                                    >
+                                        {book.title}
+                                    </a>
+                                    <p>Written By {book.author}</p>
+                                    <p>
+                                    <img align="left" style={{paddingRight:10}}
+                                        src={book.image} alt="new"
+                                    />
+                                        {book.description}
+                                    </p>
+                                    <DeleteBtn onClick={() => this.deleteBook(book._id)} />
+                                </ListItem>
+                            ))}
+                        </List>
+                    </div>
                 </div>
             </div>
-        </div>
-    )
+        )
+    }
 }
 
 export default Saved;
