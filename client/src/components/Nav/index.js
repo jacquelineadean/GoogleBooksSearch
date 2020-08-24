@@ -7,7 +7,7 @@ function Nav() {
       <Link className="navbar-brand" to="/">
         Google Books
       </Link>
-      <Link className="navbar-brand" to="/search">
+      <Link className="navbar-brand" to="/search" style={{textAlign: "right"}}>
         Search
       </Link>
       <Link className="navbar-brand" to="/saved">

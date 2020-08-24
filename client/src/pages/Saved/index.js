@@ -38,7 +38,7 @@ class Saved extends Component {
     render() {
         if (this.state.noResults) {
             return (
-                <div className='container card'>
+                <div className='container card'style={{textAlign: 'center', padding: 20}}>
                     <div>
                         <h3>Saved Books</h3>
                         <div>
@@ -49,7 +49,7 @@ class Saved extends Component {
             )
         }
         return (
-            <div className='container card'>
+            <div className='container card' style={{textAlign: 'center', padding: 20}}>
                 <div>
                     <h3>Saved Books</h3>
                     <div>

@@ -54,10 +54,9 @@ class Search extends Component {
     render() {
         return (
             <section>
-                <div className='container card'>
-                    <h3>Book Search</h3>
+                <div className='container card'style={{textAlign: 'center', padding: 20}}>
+                    <h3 >Book Search</h3>
                     <form className='form-group'>
-                        <p>Book Title</p>
                         <Input
                             name='title'
                             onChange={this.handleInputChange}
@@ -72,13 +71,12 @@ class Search extends Component {
                     </form>
                 </div>
                 <br></br>
-                <div className='container card'>
+                <div className='container card'style={{textAlign: 'center', padding: 20}}>
                     <h3>Results</h3>
                     {this.state.results.length ? (
                     <List>
                         {this.state.results.map((book, index) => (
                             <ListItem key={book.id}>
-                                <div className='card'>
                                     <img align="left" style={{paddingRight:10}} src={book.volumeInfo.imageLinks.smallThumbnail} alt='book cover' />
                                     <div className='card-body'>
                                         <h5 className='card-title'>{book.volumeInfo.title}</h5>
@@ -99,7 +97,6 @@ class Search extends Component {
                                             Save
                                         </SaveBtn>
                                     </div>
-                                </div>
                             </ListItem>
                         ))}
                     </List>
